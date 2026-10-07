@@ -42,8 +42,8 @@ export default function Home() {
         ))}
 
         <Panel id="contact" color={profile.colors.contact} text={profile.colors.contactText}>
-          <a href={`mailto:${profile.email}`}>{profile.email}</a>
-          <ul>
+          <a href={`mailto:${profile.email}`} className="font-europa text-2xl lg:text-3xl">{profile.email}</a>
+          <ul className="font-europa text-2xl lg:text-3xl">
             {profile.links.map((link) => (
               <li key={link.url}>
                 <a href={link.url} target="_blank" rel="noopener noreferrer">
