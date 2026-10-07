@@ -1,1 +1,65 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "Assassin";
+  src: url("../fonts/Assassin.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Beckman";
+  src: url("../fonts/Beckman.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Europa";
+  src: url("../fonts/Europa.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "ModesticDisplay";
+  src: url("../fonts/Modesticdisplay-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Paramour";
+  src: url("../fonts/Paramour.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "WinterDraw";
+  src: url("../fonts/WinterDraw.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bodoni";
+  src: url("../fonts/Bodoni.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-assassin: "Assassin", sans-serif;
+  --font-beckman: "Beckman", sans-serif;
+  --font-europa: "Europa", sans-serif;
+  --font-modestic: "ModesticDisplay", sans-serif;
+  --font-paramour: "Paramour", serif;
+  --font-winter: "WinterDraw", serif;
+  --font-bodoni: "Bodoni", serif;
+}

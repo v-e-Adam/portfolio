@@ -3,6 +3,7 @@ import Menu from "@/components/Menu";
 import Panel from "@/components/Panel";
 import ProjectCard from "@/components/ProjectCard";
 import { profile, projects } from "@/data/projects";
+import "./globals.css";
 
 const toId = (text: string) =>
   text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -20,12 +21,12 @@ export default function Home() {
 
       <HorizontalScroll>
         <Panel id="intro" color={profile.colors.intro} text={profile.colors.introText}>
-          <h1>{profile.name}</h1>
-          <p>{profile.headline}</p>
+          <h1 className="font-modestic -ml-1 text-[2rem] leading-8 md:text-[3rem] md:leading-12 md:-ml-1.75 lg:text-[4rem] lg:leading-16 lg:-ml-2.75">{profile.name}</h1>
+          <p className="font-europa text-[1.25rem] md:text-[2rem] lg:text-[2.5rem]">{profile.headline}</p>
         </Panel>
 
         <Panel id="bio" color={profile.colors.bio} text={profile.colors.bioText}>
-          <p>{profile.bio}</p>
+          <p className="font-europa text-[1.25rem] md:text-[2rem] lg:text-[2.5rem]">{profile.bio}</p>
         </Panel>
 
 

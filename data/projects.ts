@@ -1,6 +1,6 @@
 export type Project = {
   title: string;
-  url: string;
+  url?: string;
   role: string;
   description: string;
   /** Path under /public, e.g. "/projects/my-site.png". Recommended size: 1440x900 */
@@ -13,7 +13,7 @@ export type Project = {
 };
 
 export const profile = {
-  name: "Veronie Adamczyk",
+  name: "Veronie Halpin",
   headline: "Web developer",
   bio: "A short line about what you do and what you're looking for.",
   email: "veronie.adamczyk@icloud.com",
@@ -53,5 +53,37 @@ export const projects: Project[] = [
     tags: ["PHP", "JavaScript", "WordPress"],
     color:"#5c195e",
     textColor:"#ffffff"
+  },
+  {
+    title: "Frank Rose",
+    url: "https://www.frankrose.com/",
+    role: "Front-end development",
+    description: "One sentence on what the site is and what you did.",
+    image: "/projects/placeholder.svg",
+    imageAlt: "Home page of Project two",
+    tags: ["PHP", "JavaScript", "WordPress"],
+    color:"#000000",
+    textColor:"#ffffff"
+  },
+  {
+    title: "DOOH",
+    url: "https://www.dooh.com/",
+    role: "Front-end development",
+    description: "One sentence on what the site is and what you did.",
+    image: "/projects/placeholder.svg",
+    imageAlt: "Home page of Project two",
+    tags: ["PHP", "JavaScript", "WordPress"],
+    color:"#00a7c1",
+    textColor:"#ffffff"
+  },
+  {
+    title: "A Co-Operative approach",
+    role: "Front-end development",
+    description: "One sentence on what the site is and what you did.",
+    image: "/projects/placeholder.svg",
+    imageAlt: "Home page of Project two",
+    tags: ["PHP", "JavaScript", "WordPress"],
+    color:"#f4d8e7",
+    textColor:"#000000"
   },
 ];
