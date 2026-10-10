@@ -22,7 +22,7 @@ export default function Panel({
       className="flex items-center text-(--text-col) justify-center bg-(--panel-bg) p-6 motion-safe:h-lvh motion-safe:w-screen motion-safe:shrink-0 motion-safe:bg-transparent"
 
     >
-      <div className="w-full max-w-3xl">{children}</div>
+      <div className="w-full max-w-5xl">{children}</div>
     </section>
   );
 }

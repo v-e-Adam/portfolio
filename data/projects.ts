@@ -15,7 +15,7 @@ export type Project = {
 export const profile = {
   name: "Veronie Halpin",
   headline: "Web developer",
-  bio: "A short line about what you do and what you're looking for.",
+  bio: "<p>Self-taught Front-End Developer with 7+ years of commercial experience, combining creativity with code to build engaging digital experiences. </p></br><p>Having worked both in a digital creative agency and independently, I've developed a passion for creating responsive, interactive and visually exciting websites.</p></br><p>For me, development is more than just writing code. It's about creativity, problem-solving and building something people genuinely enjoy using. I love bringing ideas to life and continually exploring new ways to make the web a better place.</p>",
   email: "veronie.adamczyk@icloud.com",
   links: [
     { label: "GitHub", url: "https://github.com/v-e-Adam/" },
