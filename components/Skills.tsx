@@ -10,14 +10,23 @@ const POINTER_FORCE = 0.0012;
 
 export type Skill = { name: string; color: string };
 
-/** Picks black or white text, whichever is easier to read on a #rrggbb background */
+/** WCAG relative luminance of one 0-255 colour channel */
+function channel(value: number) {
+  const c = value / 255;
+  return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+}
+
+/** Picks white or black text, whichever has more contrast on a #rrggbb background */
 function readableText(hex: string) {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex);
   if (!m) return "#fff";
   const n = parseInt(m[1], 16);
-  const luminance =
-    (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255;
-  return luminance > 0.6 ? "#000" : "#fff";
+  const L =
+    0.2126 * channel(n >> 16) +
+    0.7152 * channel((n >> 8) & 255) +
+    0.0722 * channel(n & 255);
+  // Contrast with white is 1.05 / (L + 0.05); with black it is (L + 0.05) / 0.05
+  return 1.05 / (L + 0.05) >= (L + 0.05) / 0.05 ? "#fff" : "#000";
 }
 
 /**
@@ -37,15 +46,30 @@ export default function Skills({ skills }: { skills: Skill[] }) {
     if (!box) return;
     let width = box.clientWidth;
     let timer: number;
+    const relayout = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setLayoutKey((n) => n + 1), 300);
+    };
     const observer = new ResizeObserver(() => {
       if (box.clientWidth === width) return;
       width = box.clientWidth;
-      window.clearTimeout(timer);
-      timer = window.setTimeout(() => setLayoutKey((n) => n + 1), 250);
+      relayout();
     });
     observer.observe(box);
+
+    // Phones: also re-fit when rotating, once the new screen height has settled
+    const portrait = window.matchMedia("(orientation: portrait)");
+    portrait.addEventListener("change", relayout);
+
+    // Mouse layout: also re-fit when the window height changes. (Not on touch,
+    // where height changes are just the address bar moving.)
+    const mouse = window.matchMedia("(hover: hover) and (pointer: fine)");
+    if (mouse.matches) window.addEventListener("resize", relayout);
+
     return () => {
       observer.disconnect();
+      portrait.removeEventListener("change", relayout);
+      window.removeEventListener("resize", relayout);
       window.clearTimeout(timer);
     };
   }, []);
@@ -70,7 +94,7 @@ export default function Skills({ skills }: { skills: Skill[] }) {
       const baseSizes = els.map(() => (0.85 + Math.random() * 0.55) * fit);
       const applySizes = (k: number) => {
         els.forEach((el, i) => {
-          el.style.fontSize = `${Math.max(baseSizes[i] * k, 0.6).toFixed(2)}rem`;
+          el.style.fontSize = `${Math.max(baseSizes[i] * k, 0.5).toFixed(2)}rem`;
         });
       };
       const measure = () =>
@@ -78,10 +102,16 @@ export default function Skills({ skills }: { skills: Skill[] }) {
       const area = (list: { w: number; h: number }[]) =>
         list.reduce((sum, s) => sum + (s.w + 8) * (s.h + 8), 0);
 
-      // Everything must fit on screen: if the pills' total area is more than the
-      // box can hold (pills rarely pack tighter than ~45%), shrink them all evenly.
-      const maxHeight = window.innerHeight * 0.7;
-      const available = box.clientWidth * (maxHeight - 40) * 0.45;
+      // Horizontal layout (mouse): the panel is exactly one screen tall, so the
+      // box is capped and the pills shrink evenly until they all fit.
+      // Vertical layout (touch): no cap. The box grows to hold every pill.
+      const horizontal = window.matchMedia(
+        "(hover: hover) and (pointer: fine)"
+      ).matches;
+      const maxHeight = horizontal ? window.innerHeight * 0.7 : Infinity;
+
+      // Pills rarely pack tighter than ~40%, so that's the area we plan for
+      const available = box.clientWidth * (maxHeight - 40) * 0.4;
       applySizes(1);
       let sizes = measure();
       const k = Math.min(1, Math.sqrt(available / area(sizes)));
@@ -90,8 +120,8 @@ export default function Skills({ skills }: { skills: Skill[] }) {
         sizes = measure();
       }
 
-      // Box height: just enough for the pills, never taller than the screen allows
-      const needed = area(sizes) / (box.clientWidth * 0.45) + 40;
+      // Box height: just enough for the pills (capped on the horizontal layout)
+      const needed = area(sizes) / (box.clientWidth * 0.4) + 40;
       box.style.height = `${Math.round(Math.min(Math.max(needed, 260), maxHeight))}px`;
 
       let W = box.clientWidth;
@@ -267,7 +297,7 @@ export default function Skills({ skills }: { skills: Skill[] }) {
   return (
     <div
       ref={container}
-      className="touch-pan-y flex flex-wrap gap-2 motion-safe:relative motion-safe:block motion-safe:h-[60vh] motion-safe:overflow-hidden"
+      className="touch-pan-y flex flex-wrap gap-2 motion-safe:relative motion-safe:block motion-safe:overflow-hidden"
     >
       {skills.map((skill, i) => (
         <span
@@ -279,7 +309,7 @@ export default function Skills({ skills }: { skills: Skill[] }) {
             backgroundColor: skill.color,
             color: readableText(skill.color),
           }}
-          className="select-none whitespace-nowrap rounded-full px-[1em] py-[0.5em] will-change-transform motion-safe:absolute motion-safe:left-0 motion-safe:top-0 motion-safe:opacity-0"
+          className="select-none whitespace-nowrap rounded-full px-[1em] py-[0.5em] will-change-transform motion-safe:absolute motion-safe:left-0 motion-safe:top-0 motion-safe:opacity-0 font-winter"
         >
           {skill.name}
         </span>

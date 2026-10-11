@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @custom-variant mouse (@media (hover: hover) and (pointer: fine));
+@custom-variant phone-landscape (@media (orientation: landscape) and (hover: none) and (pointer: coarse) and (max-height: 500px));
+
 
 @font-face {
   font-family: "Assassin";
@@ -75,4 +77,11 @@
   --font-bodoni: "Bodoni", serif;
   --font-note: "NoteThis", serif;
   --font-love: "LoveLetter-Regular", serif;
+}
+
+@media (orientation: landscape) and (hover: none) and (pointer: coarse) and (max-height: 500px) {
+  html,
+  body {
+    overflow: hidden;
+  }
 }
