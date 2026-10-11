@@ -63,6 +63,7 @@ export const profile = {
   { name: "Code Reviews", color: "#d41170" },
   { name: "Component Architecture", color: "#d22556" },
   { name: "Time Management", color: "#da1b29" },
+  { name: "Claude", color: "#312e81" },
 ],
 };
 
