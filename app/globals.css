@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant mouse (@media (hover: hover) and (pointer: fine));
 
 @font-face {
   font-family: "Assassin";
