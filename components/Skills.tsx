@@ -94,24 +94,39 @@ export default function Skills({ skills }: { skills: Skill[] }) {
       const baseSizes = els.map(() => (0.85 + Math.random() * 0.55) * fit);
       const applySizes = (k: number) => {
         els.forEach((el, i) => {
-          el.style.fontSize = `${Math.max(baseSizes[i] * k, 0.5).toFixed(2)}rem`;
+          el.style.fontSize = `${Math.max(baseSizes[i] * k, 0.65).toFixed(2)}rem`;
         });
       };
       const measure = () =>
         els.map((el) => ({ w: el.offsetWidth, h: el.offsetHeight }));
       const area = (list: { w: number; h: number }[]) =>
-        list.reduce((sum, s) => sum + (s.w + 8) * (s.h + 8), 0);
+        list.reduce((sum, s) => sum + (s.w + 4) * (s.h + 4), 0);
 
-      // Horizontal layout (mouse): the panel is exactly one screen tall, so the
-      // box is capped and the pills shrink evenly until they all fit.
-      // Vertical layout (touch): no cap. The box grows to hold every pill.
+      // The skills should fit on one screen on both layouts. Work out how much
+      // height is left once the panel's padding and the heading are taken out.
       const horizontal = window.matchMedia(
         "(hover: hover) and (pointer: fine)"
       ).matches;
-      const maxHeight = horizontal ? window.innerHeight * 0.7 : Infinity;
 
-      // Pills rarely pack tighter than ~40%, so that's the area we plan for
-      const available = box.clientWidth * (maxHeight - 40) * 0.4;
+      let above = 0;
+      for (let el = box.previousElementSibling; el; el = el.previousElementSibling) {
+        const style = getComputedStyle(el);
+        above +=
+          (el as HTMLElement).offsetHeight +
+          parseFloat(style.marginTop) +
+          parseFloat(style.marginBottom);
+      }
+      const panel = box.closest("section");
+      const panelStyle = panel ? getComputedStyle(panel) : null;
+      const padding = panelStyle
+        ? parseFloat(panelStyle.paddingTop) + parseFloat(panelStyle.paddingBottom)
+        : 0;
+      const maxHeight = Math.max(window.innerHeight - padding - above, 240);
+
+      // Pills settle at roughly 55% density, so that's the area we plan for.
+      // If they don't fit, shrink them all evenly (down to a readable minimum).
+      const density = 0.55;
+      const available = box.clientWidth * (maxHeight - 20) * density;
       applySizes(1);
       let sizes = measure();
       const k = Math.min(1, Math.sqrt(available / area(sizes)));
@@ -120,9 +135,11 @@ export default function Skills({ skills }: { skills: Skill[] }) {
         sizes = measure();
       }
 
-      // Box height: just enough for the pills (capped on the horizontal layout)
-      const needed = area(sizes) / (box.clientWidth * 0.4) + 40;
-      box.style.height = `${Math.round(Math.min(Math.max(needed, 260), maxHeight))}px`;
+      // Box height: just enough for the pills. If even the smallest readable
+      // size doesn't fit on one screen, grow a little (touch) rather than cut
+      // skills off; the horizontal layout is a fixed screen, so it stays capped.
+      const needed = Math.max(area(sizes) / (box.clientWidth * density) + 20, 240);
+      box.style.height = `${Math.round(horizontal ? Math.min(needed, maxHeight) : needed)}px`;
 
       let W = box.clientWidth;
       let H = box.clientHeight;
@@ -309,7 +326,7 @@ export default function Skills({ skills }: { skills: Skill[] }) {
             backgroundColor: skill.color,
             color: readableText(skill.color),
           }}
-          className="select-none whitespace-nowrap rounded-full px-[1em] py-[0.5em] will-change-transform motion-safe:absolute motion-safe:left-0 motion-safe:top-0 motion-safe:opacity-0 font-winter"
+          className="select-none whitespace-nowrap rounded-full px-[0.8em] py-[0.4em] will-change-transform motion-safe:absolute motion-safe:left-0 motion-safe:top-0 motion-safe:opacity-0 font-winter"
         >
           {skill.name}
         </span>
