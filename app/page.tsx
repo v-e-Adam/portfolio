@@ -32,7 +32,7 @@ export default function Home() {
         </Panel>
 
         <Panel id="skills" color={profile.colors.skills}>
-          <h2>Skills</h2>
+          <h2 className="font-modestic -ml-1 text-[2rem] leading-8 md:text-[3rem] md:leading-12 md:-ml-1.75 lg:text-[4rem] lg:leading-16 lg:-ml-2.75 text-center">Skills</h2>
           <Skills skills={profile.skills} />
         </Panel>
 
