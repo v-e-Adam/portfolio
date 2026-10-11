@@ -26,7 +26,7 @@ export default function Home() {
         </Panel>
 
         <Panel id="bio" color={profile.colors.bio} text={profile.colors.bioText}>
-          <div className="font-europa text-[1.25rem] md:text-[2rem]" dangerouslySetInnerHTML={{ __html: profile.bio }}></div>
+          <div className="font-love text-[1.25rem] md:text-[1.75rem] [&_p]:mb-4 leading-10" dangerouslySetInnerHTML={{ __html: profile.bio }}></div>
         </Panel>
 
 

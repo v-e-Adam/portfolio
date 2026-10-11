@@ -7,7 +7,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "Beckman";
   src: url("../fonts/Beckman.ttf") format("truetype");
@@ -15,7 +14,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "Europa";
   src: url("../fonts/Europa.ttf") format("truetype");
@@ -23,7 +21,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "ModesticDisplay";
   src: url("../fonts/Modesticdisplay-Bold.ttf") format("truetype");
@@ -31,7 +28,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "Paramour";
   src: url("../fonts/Paramour.ttf") format("truetype");
@@ -47,8 +43,22 @@
   font-display: swap;
 }
 @font-face {
+  font-family: "NoteThis";
+  src: url("../fonts/NoteThis.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
   font-family: "Bodoni";
   src: url("../fonts/Bodoni.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "LoveLetter-Regular";
+  src: url("../fonts/LoveLetter-Regular.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -62,4 +72,6 @@
   --font-paramour: "Paramour", serif;
   --font-winter: "WinterDraw", serif;
   --font-bodoni: "Bodoni", serif;
+  --font-note: "NoteThis", serif;
+  --font-love: "LoveLetter-Regular", serif;
 }

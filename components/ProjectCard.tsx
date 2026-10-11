@@ -19,7 +19,7 @@ export default function ProjectCard({ project }: { project: Project }) {
           <p className="mx-2.5 hidden md:block">-</p>
           <p className="font-europa"> {project.role}</p>
         </div>
-        <p className="font-europa">{project.description}</p>
+        <p className="font-modestic">{project.description}</p>
         {project.tags && (
           <ul className="flex gap-x-2 mt-2 md:mt-4">
             {project.tags.map((tag) => (
